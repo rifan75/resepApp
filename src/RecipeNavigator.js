@@ -14,7 +14,7 @@ const RecipeNavigator = () =>{
 	return(
 		<NavigationContainer>
 			<Stack.Navigator
-				screenOptions={{headerStyle: {backgroundColor: '#f4511e',}}}
+				screenOptions={{headerStyle: {backgroundColor: Color.accentColor,}}}
 			>
 				<Stack.Screen 
 					options={{ title: 'Resep Kategori'}}

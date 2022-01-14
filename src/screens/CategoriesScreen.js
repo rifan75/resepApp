@@ -1,26 +1,16 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { FlatList, StyleSheet } from 'react-native'
 import { CATEGORIES } from '../data/dummy-data'
+import CategoryGridView from '../components/CategoryGridView'
 
 
-const CategoriesScreen = props =>{
-	const navigation = useNavigation()
+const CategoriesScreen = () =>{
 	const renderGridItem = (itemData) =>{
-		return (
-			<TouchableOpacity
-				style={styles.gridItem}
-				onPress={() => {navigation.navigate('RecipeCategories',
-					{
-						categoryId : itemData.item.id,
-						categoryName : itemData.item.title
-					})}}
-			>
-				<View>
-					<Text>{itemData.item.title}</Text>
-				</View>
-			</TouchableOpacity>
-		)
+		return 	(<CategoryGridView 
+							id = {itemData.item.id}
+							title = {itemData.item.title}
+							color = {itemData.item.color}
+						/>)
 	}
 	return (
 		<FlatList 
@@ -38,11 +28,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-		gridItem: {
-			flex: 1,
-			margin: 15,
-			height: 150
-		}
 })
 
 export default CategoriesScreen
