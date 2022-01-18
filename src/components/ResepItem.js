@@ -6,11 +6,19 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const ResepItem = props => {
+  const navigation = useNavigation();
   return (
     <View style={styles.ResepItem}>
-      <TouchableOpacity onPress={props.onSelectResep}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('RecipeDetail', {
+            resepId: props.id,
+            categoryName: props.title,
+          });
+        }}>
         <View>
           <View style={{...styles.rowResep, ...styles.headerResep}}>
             <ImageBackground source={{uri: props.image}} style={styles.bgImage}>
