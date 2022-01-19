@@ -47,11 +47,11 @@ const ResepItem = props => {
 const styles = StyleSheet.create({
   ResepItem: {
     height: 200,
-    width: '95%',
+    width: '100%',
     backgroundColor: '#f5f5f5',
-    margin: 10,
     borderRadius: 10,
     overflow: 'hidden',
+    marginVertical: 10,
   },
   bgImage: {
     height: '100%',

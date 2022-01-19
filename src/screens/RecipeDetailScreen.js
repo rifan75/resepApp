@@ -11,7 +11,8 @@ const RecipeDetailScreen = ({route, navigation}) => {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: categoryName,
+      title: categoryName,
+      headerTintColor: '#fff',
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={IonicHeaderButton}>
           <Item

@@ -1,20 +1,10 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React from 'react';
+import ResepList from '../components/ResepList';
+import {MEALS} from '../data/dummy-data';
 
-const FavoriteScreen = props =>{
-    return (
-        <View style={styles.screen}>
-            <Text>Layar Favorit</Text>
-        </View>
-    )
-}
+const FavoriteScreen = props => {
+  const favresep = MEALS.filter(meal => meal.id === 'm1' || meal.id === 'm2');
+  return <ResepList reseplist={favresep} />;
+};
 
-const styles = StyleSheet.create({
-    screen : {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
-
-export default FavoriteScreen
+export default FavoriteScreen;
