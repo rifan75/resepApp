@@ -7,6 +7,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import DefaultText from './DefaultText';
 
 const ResepItem = props => {
   const navigation = useNavigation();
@@ -30,13 +31,15 @@ const ResepItem = props => {
             </ImageBackground>
           </View>
           <View style={{...styles.rowResep, ...styles.detailResep}}>
-            <Text style={styles.textResep}>{props.duration} menit</Text>
-            <Text style={styles.textResep}>
+            <DefaultText style={styles.textResep}>
+              {props.duration} menit
+            </DefaultText>
+            <DefaultText style={styles.textResep}>
               {props.complexity.replace(/^./, str => str.toUpperCase())}
-            </Text>
-            <Text style={styles.textResep}>
+            </DefaultText>
+            <DefaultText style={styles.textResep}>
               {props.affordability.replace(/^./, str => str.toUpperCase())}
-            </Text>
+            </DefaultText>
           </View>
         </View>
       </TouchableOpacity>
@@ -70,10 +73,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '15%',
     backgroundColor: '#ccc',
-  },
-  textResep: {
-    color: 'black',
-    fontSize: 15,
   },
   titleContainer: {
     backgroundColor: 'rgba(0,0,0,0.5)',

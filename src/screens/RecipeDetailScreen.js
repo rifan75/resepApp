@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {ScrollView, View, Text, StyleSheet, Image} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {MEALS} from '../data/dummy-data';
 import IonicHeaderButton from '../components/IonicHeaderButton';
+import DefaultText from '../components/DefaultText';
 
 const RecipeDetailScreen = ({route, navigation}) => {
   const {resepId, categoryName} = route.params;
@@ -28,9 +29,23 @@ const RecipeDetailScreen = ({route, navigation}) => {
   }, [navigation]);
 
   return (
-    <View style={styles.screen}>
-      <Text>{selectedResep.title}</Text>
-    </View>
+    <ScrollView>
+      <Image />
+      <View style={{...styles.rowResep, ...styles.detailResep}}>
+        <DefaultText style={styles.textResep}>
+          {props.duration} menit
+        </DefaultText>
+        <DefaultText style={styles.textResep}>
+          {props.complexity.replace(/^./, str => str.toUpperCase())}
+        </DefaultText>
+        <DefaultText style={styles.textResep}>
+          {props.affordability.replace(/^./, str => str.toUpperCase())}
+        </DefaultText>
+      </View>
+      <View style={styles.screen}>
+        <Text>{selectedResep.title}</Text>
+      </View>
+    </ScrollView>
   );
 };
 

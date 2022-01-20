@@ -4,7 +4,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import {OverflowMenuProvider} from 'react-navigation-header-buttons';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {
+  OverflowMenuProvider,
+  HeaderButtons,
+  Item,
+} from 'react-navigation-header-buttons';
+import IonicHeaderButton from './components/IonicHeaderButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CategoriesScreen from './screens/CategoriesScreen';
 import RecipeCategoriesScreen from './screens/RecipeCategoriesScreen';
@@ -15,12 +21,28 @@ import Color from './constans/Colors';
 
 const RecipeNavigator = () => {
   const MainStack = createNativeStackNavigator();
-  const HomeStackScreen = () => {
+  const MainStackNavigator = () => {
     return (
       <MainStack.Navigator
-        screenOptions={{headerStyle: {backgroundColor: '#694fad'}}}>
+        screenOptions={{
+          headerStyle: {backgroundColor: '#694fad'},
+        }}>
         <MainStack.Screen
-          options={{title: 'Resep Kategori', headerTintColor: '#fff'}}
+          options={({navigation}) => ({
+            title: 'Resep Kategori',
+            headerTintColor: '#fff',
+            headerLeft: () => (
+              <HeaderButtons HeaderButtonComponent={IonicHeaderButton}>
+                <Item
+                  title="Menu"
+                  iconName="ios-menu"
+                  onPress={() => {
+                    navigation.toggleDrawer();
+                  }}
+                />
+              </HeaderButtons>
+            ),
+          })}
           name="Categories"
           component={CategoriesScreen}
         />
@@ -38,14 +60,28 @@ const RecipeNavigator = () => {
   };
 
   const FavStack = createNativeStackNavigator();
-  const FavstackScreen = () => {
+  const FavstackNavigator = () => {
     return (
       <FavStack.Navigator
         screenOptions={{headerStyle: {backgroundColor: '#694fad'}}}>
         <FavStack.Screen
           name="R-Favorite"
           component={FavoriteScreen}
-          options={{title: 'Resep Favorite', headerTintColor: '#fff'}}
+          options={({navigation}) => ({
+            title: 'Resep Favorite',
+            headerTintColor: '#fff',
+            headerLeft: () => (
+              <HeaderButtons HeaderButtonComponent={IonicHeaderButton}>
+                <Item
+                  title="Menu"
+                  iconName="ios-menu"
+                  onPress={() => {
+                    navigation.toggleDrawer();
+                  }}
+                />
+              </HeaderButtons>
+            ),
+          })}
         />
         <FavStack.Screen name="RecipeDetail" component={RecipeDetailScreen} />
       </FavStack.Navigator>
@@ -57,42 +93,98 @@ const RecipeNavigator = () => {
       ? createMaterialBottomTabNavigator()
       : createBottomTabNavigator();
 
+  const ResepTabNavigator = () => {
+    return (
+      <Tab.Navigator
+        screenOptions={{headerShown: false}}
+        barStyle={{backgroundColor: '#694fad'}}>
+        <Tab.Screen
+          name="Home"
+          component={MainStackNavigator}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({focused}) => (
+              <Ionicons
+                name="home"
+                size={25}
+                color={focused ? Color.accentColor : 'white'}
+              />
+            ),
+            // tabBarBadge: 3,
+          }}
+        />
+        <Tab.Screen
+          name="Favorite"
+          component={FavstackNavigator}
+          options={{
+            tabBarLabel: 'Favorite',
+            tabBarIcon: ({focused}) => (
+              <Ionicons
+                name="ios-star"
+                size={25}
+                color={focused ? Color.accentColor : 'white'}
+              />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    );
+  };
+
+  const FilterStack = createNativeStackNavigator();
+  const FilterStackScreen = () => {
+    return (
+      <FilterStack.Navigator
+        screenOptions={{headerStyle: {backgroundColor: '#694fad'}}}>
+        <FilterStack.Screen
+          name="Filter-Screen"
+          component={FilterScreen}
+          options={({navigation}) => ({
+            title: 'Filter',
+            headerTintColor: '#fff',
+            headerLeft: () => (
+              <HeaderButtons HeaderButtonComponent={IonicHeaderButton}>
+                <Item
+                  title="Menu"
+                  iconName="ios-menu"
+                  onPress={() => {
+                    navigation.toggleDrawer();
+                  }}
+                />
+              </HeaderButtons>
+            ),
+          })}
+        />
+      </FilterStack.Navigator>
+    );
+  };
+
+  const Drawer = createDrawerNavigator();
+  const DrawerStackNavigator = () => {
+    return (
+      <Drawer.Navigator>
+        <Drawer.Screen
+          name="Resep-Draw"
+          component={ResepTabNavigator}
+          options={{
+            headerShown: false,
+            title: 'Resep',
+            drawerActiveTintColor: Color.accentColor,
+          }}
+        />
+        <Drawer.Screen
+          name="Filter"
+          component={FilterStackScreen}
+          options={{headerShown: false}}
+        />
+      </Drawer.Navigator>
+    );
+  };
+
   return (
     <NavigationContainer>
       <OverflowMenuProvider>
-        <Tab.Navigator
-          screenOptions={{headerShown: false}}
-          barStyle={{backgroundColor: '#694fad'}}>
-          <Tab.Screen
-            name="Home"
-            component={HomeStackScreen}
-            options={{
-              tabBarLabel: 'Home',
-              tabBarIcon: ({focused}) => (
-                <Ionicons
-                  name="home"
-                  size={25}
-                  color={focused ? Color.accentColor : 'white'}
-                />
-              ),
-              // tabBarBadge: 3,
-            }}
-          />
-          <Tab.Screen
-            name="Favorite"
-            component={FavstackScreen}
-            options={{
-              tabBarLabel: 'Favorite',
-              tabBarIcon: ({focused}) => (
-                <Ionicons
-                  name="ios-star"
-                  size={25}
-                  color={focused ? Color.accentColor : 'white'}
-                />
-              ),
-            }}
-          />
-        </Tab.Navigator>
+        <DrawerStackNavigator />
       </OverflowMenuProvider>
     </NavigationContainer>
   );

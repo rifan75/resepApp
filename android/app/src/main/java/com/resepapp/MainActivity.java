@@ -1,6 +1,7 @@
 package com.resepapp;
 
 import com.facebook.react.ReactActivity;
+import android.os.Bundle;//add from react navigation
 
 public class MainActivity extends ReactActivity {
 
@@ -11,5 +12,10 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "resepApp";
+  }
+
+  @Override //add add from react navigation
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null); 
   }
 }
