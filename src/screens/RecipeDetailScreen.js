@@ -5,6 +5,13 @@ import {MEALS} from '../data/dummy-data';
 import IonicHeaderButton from '../components/IonicHeaderButton';
 import DefaultText from '../components/DefaultText';
 
+const ListItem = props => {
+  return (
+    <View style={styles.listItem}>
+      <DefaultText>{props.children}</DefaultText>
+    </View>
+  );
+};
 const RecipeDetailScreen = ({route, navigation}) => {
   const {resepId, categoryName} = route.params;
 
@@ -30,30 +37,50 @@ const RecipeDetailScreen = ({route, navigation}) => {
 
   return (
     <ScrollView>
-      <Image />
-      <View style={{...styles.rowResep, ...styles.detailResep}}>
-        <DefaultText style={styles.textResep}>
-          {props.duration} menit
+      <Image source={{uri: selectedResep.imageUrl}} style={styles.image} />
+      <View style={styles.detail}>
+        <DefaultText>{selectedResep.duration} menit</DefaultText>
+        <DefaultText>
+          {selectedResep.complexity.replace(/^./, str => str.toUpperCase())}
         </DefaultText>
-        <DefaultText style={styles.textResep}>
-          {props.complexity.replace(/^./, str => str.toUpperCase())}
-        </DefaultText>
-        <DefaultText style={styles.textResep}>
-          {props.affordability.replace(/^./, str => str.toUpperCase())}
+        <DefaultText>
+          {selectedResep.affordability.replace(/^./, str => str.toUpperCase())}
         </DefaultText>
       </View>
-      <View style={styles.screen}>
-        <Text>{selectedResep.title}</Text>
-      </View>
+      <Text style={styles.title}>Ingredients</Text>
+      {selectedResep.ingredients.map(ingredient => (
+        <ListItem key={ingredient}>{ingredient}</ListItem>
+      ))}
+      <Text style={styles.title}>Steps</Text>
+      {selectedResep.steps.map(step => (
+        <ListItem key={step}>{step}</ListItem>
+      ))}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  image: {
+    width: '100%',
+    height: 200,
+  },
+  detail: {
+    flexDirection: 'row',
+    padding: 15,
+    justifyContent: 'space-around',
+  },
+  title: {
+    color: 'black',
+    fontSize: 21,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  listItem: {
+    marginVertical: 10,
+    marginHorizontal: 20,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    padding: 10,
   },
 });
 
