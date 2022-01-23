@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, View, Text, StyleSheet, Image} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {MEALS} from '../data/dummy-data';
+import {useSelector, useDispatch} from 'react-redux';
+import {toggleFavorite} from '../store/actions/resepAct';
 import IonicHeaderButton from '../components/IonicHeaderButton';
 import DefaultText from '../components/DefaultText';
 
@@ -12,10 +13,21 @@ const ListItem = props => {
     </View>
   );
 };
+
 const RecipeDetailScreen = ({route, navigation}) => {
+  const dispatch = useDispatch();
   const {resepId, categoryName} = route.params;
 
-  const selectedResep = MEALS.find(resep => resep.id === resepId);
+  const resepTersedia = useSelector(state => state.resep.resep);
+  const selectedResep = resepTersedia.find(resep => resep.id === resepId);
+
+  const apakahResepfavorite = useSelector(state =>
+    state.resep.favoriteResep.some(resep => resep.id === resepId),
+  );
+
+  const favoriteHandler = () => {
+    dispatch(toggleFavorite(resepId));
+  };
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -25,15 +37,13 @@ const RecipeDetailScreen = ({route, navigation}) => {
         <HeaderButtons HeaderButtonComponent={IonicHeaderButton}>
           <Item
             title="Favorite"
-            iconName="ios-star"
-            onPress={() => {
-              console.log('Mark as Favorite');
-            }}
+            iconName={apakahResepfavorite ? 'ios-star' : 'ios-star-outline'}
+            onPress={favoriteHandler}
           />
         </HeaderButtons>
       ),
     });
-  }, [navigation]);
+  }, [navigation, apakahResepfavorite]);
 
   return (
     <ScrollView>

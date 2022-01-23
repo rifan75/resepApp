@@ -1,6 +1,6 @@
 import React from 'react';
 import {Platform} from 'react-native';
-import {NavigationContainer, CommonActions} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
@@ -136,36 +136,7 @@ const RecipeNavigator = () => {
     return (
       <FilterStack.Navigator
         screenOptions={{headerStyle: {backgroundColor: '#694fad'}}}>
-        <FilterStack.Screen
-          name="Filter-Screen"
-          component={FilterScreen}
-          options={({navigation, route}) => ({
-            title: 'Filter',
-            headerTintColor: '#fff',
-            headerLeft: () => (
-              <HeaderButtons HeaderButtonComponent={IonicHeaderButton}>
-                <Item
-                  title="Menu"
-                  iconName="ios-menu"
-                  onPress={() => {
-                    navigation.toggleDrawer();
-                  }}
-                />
-              </HeaderButtons>
-            ),
-            headerRight: () => (
-              <HeaderButtons HeaderButtonComponent={IonicHeaderButton}>
-                <Item
-                  title="Save"
-                  iconName="ios-save"
-                  onPress={() => {
-                    route.params.save;
-                  }}
-                />
-              </HeaderButtons>
-            ),
-          })}
-        />
+        <FilterStack.Screen name="Filter-Screen" component={FilterScreen} />
       </FilterStack.Navigator>
     );
   };

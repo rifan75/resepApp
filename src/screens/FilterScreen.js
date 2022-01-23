@@ -1,6 +1,8 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {Platform, View, Text, StyleSheet, Switch} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import IonicHeaderButton from '../components/IonicHeaderButton';
 import DefaultText from '../components/DefaultText';
 import Colors from '../constans/Colors';
 
@@ -36,9 +38,28 @@ const FilterScreen = props => {
     console.log(appliedFilters);
   }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
 
-  useEffect(() => {
-    navigation.setParams({save: saveFilters});
-  }, [saveFilters]);
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: 'Filter',
+      headerTintColor: '#fff',
+      headerLeft: () => (
+        <HeaderButtons HeaderButtonComponent={IonicHeaderButton}>
+          <Item
+            title="Menu"
+            iconName="ios-menu"
+            onPress={() => {
+              navigation.toggleDrawer();
+            }}
+          />
+        </HeaderButtons>
+      ),
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={IonicHeaderButton}>
+          <Item title="Save" iconName="ios-save" onPress={saveFilters} />
+        </HeaderButtons>
+      ),
+    });
+  }, [navigation, saveFilters]);
 
   return (
     <View style={styles.screen}>
