@@ -2,9 +2,11 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {Platform, View, Text, StyleSheet, Switch} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {useDispatch} from 'react-redux';
 import IonicHeaderButton from '../components/IonicHeaderButton';
 import DefaultText from '../components/DefaultText';
 import Colors from '../constans/Colors';
+import {setFilter} from '../store/actions/resepAct';
 
 const FilterSwitch = props => {
   return (
@@ -21,6 +23,7 @@ const FilterSwitch = props => {
 };
 const FilterScreen = props => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const [isGlutenFree, setIsGlutenFree] = useState(false);
   const [isLactoseFree, setIsLactoseFree] = useState(false);
@@ -32,10 +35,10 @@ const FilterScreen = props => {
       glutenFree: isGlutenFree,
       lactoseFree: isLactoseFree,
       vegan: isVegan,
-      isVegetarian: isVegetarian,
+      vegetarian: isVegetarian,
     };
 
-    console.log(appliedFilters);
+    dispatch(setFilter(appliedFilters));
   }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
 
   React.useLayoutEffect(() => {

@@ -29,16 +29,16 @@ const resepReducer = (state = initialState, action) => {
     case SET_FILTER:
       const appliedFilter = action.filter;
       const resepTerfilter = state.resep.filter(resep => {
-        if (appliedFilter.isGlutenFree && !resep.isGlutenFree) {
+        if (appliedFilter.glutenFree && !resep.isGlutenFree) {
           return false;
         }
-        if (appliedFilter.isVegan && !resep.isVegan) {
+        if (appliedFilter.vegan && !resep.isVegan) {
           return false;
         }
-        if (appliedFilter.isVegetarian && !resep.isVegetarian) {
+        if (appliedFilter.vegetarian && !resep.isVegetarian) {
           return false;
         }
-        if (appliedFilter.isLactoseFree && !resep.isLactoseFree) {
+        if (appliedFilter.lactoseFree && !resep.isLactoseFree) {
           return false;
         }
         return true;
